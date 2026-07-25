@@ -92,7 +92,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {menuOpen ? (
+      {/* {menuOpen ? (
         <div className="border-t border-white/8 bg-[#0b1811] px-4 py-3 sm:hidden">
           <nav className="site-container grid gap-1" aria-label="Mobile navigation">
             {navItems.map((item) => (
@@ -114,7 +114,7 @@ const Navbar = () => {
             </button>
           </nav>
         </div>
-      ) : null}
+      ) : null} */}
 
       {showCart ? <CartDrawer /> : null}
     </header>
