@@ -1,58 +1,33 @@
 import React from "react";
-import { Trash2, Minus, Plus } from "lucide-react";
+import { Minus, Plus, Trash2 } from "lucide-react";
 
-const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => {
-  return (
-    <div className="rounded-3xl border border-zinc-600 p-4">
-      <div className="flex gap-4">
-        <img
-          src={item.image}
-          alt={item.title}
-          className="h-24 w-24 rounded-2xl object-cover"
-        />
-
-        <div className="flex flex-1 flex-col justify-between">
-          <div>
-            <h3 className="text-lg font-semibold text-white">{item.title}</h3>
-
-            <p className="mt-1 text-2xl font-bold text-lime-400">
-              ${item.price}
-            </p>
-
-            <p className="text-zinc-500">
-              ${(item.price * item.quantity).toFixed(2)}
-            </p>
+const CartItem = ({ item, onIncrease, onDecrease, onRemove }) => (
+  <article className="rounded-2xl border border-slate-200 bg-white p-3.5 shadow-[0_4px_14px_rgba(31,57,42,.06)]">
+    <div className="flex gap-3.5">
+      <div className="grid h-[5.5rem] w-[5.5rem] shrink-0 place-items-center rounded-xl bg-[#f0f6ef] p-3">
+        <img src={item.image} alt={item.title} className="h-full w-full object-contain mix-blend-multiply" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="flex items-start gap-2">
+          <div className="min-w-0 flex-1">
+            <h3 className="line-clamp-2 text-sm font-extrabold leading-5 text-slate-900">{item.title}</h3>
+            <p className="mt-1 text-[11px] font-semibold capitalize text-slate-500">{item.category}</p>
           </div>
-
-          <div className="mt-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={onDecrease}
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-700 hover:bg-zinc-800"
-              >
-                <Minus size={18} className="text-white" />
-              </button>
-
-              <span className="text-lg font-semibold text-white">
-                {item.quantity}
-              </span>
-
-              <button
-                onClick={onIncrease}
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-700 hover:bg-zinc-800"
-              >
-                <Plus size={18} className="text-white" />
-              </button>
-            </div>
-
-            <button onClick={onRemove}>
-              <Trash2 className="text-red-500 hover:text-red-400" />
-            </button>
+          <button onClick={onRemove} className="grid h-8 w-8 place-items-center rounded-lg text-slate-400 hover:bg-rose-50 hover:text-rose-600" aria-label={`Remove ${item.title}`}>
+            <Trash2 size={16} />
+          </button>
+        </div>
+        <div className="mt-3.5 flex items-center justify-between gap-3">
+          <div className="flex items-center rounded-lg border border-slate-200 bg-[#f7faf6] p-0.5 shadow-inner">
+            <button onClick={onDecrease} className="grid h-7 w-7 place-items-center rounded-md text-slate-500 hover:bg-white hover:text-[#246542]" aria-label={`Decrease ${item.title} quantity`}><Minus size={14} /></button>
+            <span className="w-8 text-center text-xs font-extrabold text-slate-800">{item.quantity}</span>
+            <button onClick={onIncrease} className="grid h-7 w-7 place-items-center rounded-md bg-white text-[#246542] shadow-sm hover:bg-[#e8f6e7]" aria-label={`Increase ${item.title} quantity`}><Plus size={14} /></button>
           </div>
+          <div className="text-right"><p className="text-base font-extrabold text-[#166439]">${(item.price * item.quantity).toFixed(2)}</p>{item.quantity > 1 ? <p className="mt-0.5 text-[10px] font-medium text-slate-400">${item.price.toFixed(2)} each</p> : null}</div>
         </div>
       </div>
     </div>
-  );
-};
+  </article>
+);
 
 export default CartItem;

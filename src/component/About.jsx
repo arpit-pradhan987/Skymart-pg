@@ -1,71 +1,24 @@
 import React from "react";
-import { Zap, Package, Users, Star, Truck } from "lucide-react";
+import { Package, Sparkles, Star, Truck, Users } from "lucide-react";
 
 const stats = [
-  {
-    id: 1,
-    icon: <Package size={28} />,
-    value: "20K+",
-    title: "Products",
-  },
-  {
-    id: 2,
-    icon: <Users size={28} />,
-    value: "50K+",
-    title: "Happy Customers",
-  },
-  {
-    id: 3,
-    icon: <Star size={28} />,
-    value: "4.9",
-    title: "Avg. Rating",
-  },
-  {
-    id: 4,
-    icon: <Truck size={28} />,
-    value: "99%",
-    title: "On-time Delivery",
-  },
+  { icon: Package, value: "20K+", label: "Products discovered" },
+  { icon: Users, value: "50K+", label: "Happy customers" },
+  { icon: Star, value: "4.9/5", label: "Average rating" },
+  { icon: Truck, value: "99%", label: "On-time delivery" },
 ];
 
-const AboutPage = () => {
-  return (
-    <section className=" bg-[#111111] text-white py-13 px-6 ">
-      <div className="max-w-7xl mx-auto">
-        {/* Heading */}
-        <div className="flex flex-col items-center text-center">
-          <div className="w-20 h-20 rounded-3xl bg-lime-400 flex items-center justify-center mb-8">
-            <Zap className="text-black" size={36} fill="black" />
-          </div>
-
-          <h1 className="text-5xl md:text-7xl font-bold">
-            About <span className="text-lime-400">SkyMart</span>
-          </h1>
-
-          <p className="mt-8 max-w-3xl text-gray-500 text-lg md:text-2xl leading-relaxed">
-            SkyMart is a next-generation e-commerce platform built to make
-            online shopping fast, fair, and enjoyable — for everyone.
-          </p>
-        </div>
-
-        {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-24 ">
-          {stats.map((item) => (
-            <div
-              key={item.id}
-              className="border border-zinc-600 rounded-3xl py-12 px-6 flex flex-col items-center hover:border-lime-400 hover:-translate-y-2 transition-all duration-300"
-            >
-              <div className="text-lime-400 mb-8">{item.icon}</div>
-
-              <h2 className="text-5xl font-bold">{item.value}</h2>
-
-              <p className="text-gray-500 text-lg mt-3">{item.title}</p>
-            </div>
-          ))}
-        </div>
+const About = () => (
+  <section className="page-enter pt-8 sm:pt-12">
+    <div className="site-container">
+      <div className="relative overflow-hidden rounded-[2rem] border border-lime-200/14 bg-[#102a1b] px-6 py-12 text-center sm:px-10 sm:py-16">
+        <div className="absolute -left-20 -top-20 h-56 w-56 rounded-full bg-lime-300/12 blur-3xl" />
+        <div className="absolute -bottom-24 -right-16 h-64 w-64 rounded-full bg-sky-400/10 blur-3xl" />
+        <div className="relative mx-auto max-w-3xl"><span className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-lime-300 text-[#12331e]"><Sparkles size={22} /></span><p className="eyebrow mt-6">Shopping, made considered</p><h1 className="mt-3 text-4xl font-extrabold tracking-[-0.04em] text-white sm:text-6xl">A better everyday <span className="text-lime-200">storefront.</span></h1><p className="mt-5 text-base leading-7 text-emerald-50/70 sm:text-lg">SkyMart helps people find useful, well-loved products without the endless scrolling. Clear choices, dependable delivery, and a little more delight in the details.</p></div>
       </div>
-    </section>
-  );
-};
+      <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{stats.map(({ icon, value, label }) => { const Icon = icon; return <div key={label} className="surface rounded-2xl p-5"><Icon size={19} className="text-lime-200" /><p className="mt-5 text-2xl font-extrabold text-white">{value}</p><p className="mt-1 text-sm text-slate-400">{label}</p></div>; })}</div>
+    </div>
+  </section>
+);
 
-export default AboutPage;
+export default About;

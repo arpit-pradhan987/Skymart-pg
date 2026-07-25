@@ -1,85 +1,51 @@
 import React, { useContext } from "react";
+import { ArrowUpRight, ShoppingBag, Star } from "lucide-react";
 import { useNavigate } from "react-router";
-import { Star, ShoppingCart } from "lucide-react";
 import { Main } from "../cosntext/MainContext.jsx";
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
   const { addToCart } = useContext(Main);
-
-  const handleProductClick = () => {
-    navigate(`/main/product/${product.id}`);
-  };
-
-  const handleAddClick = (event) => {
-    event.stopPropagation();
-    addToCart(product);
-  };
+  const rating = product.rating?.rate ?? 0;
+  const reviewCount = product.rating?.count ?? 0;
 
   return (
-    <div
-      onClick={handleProductClick}
-      className="bg-[#121212] border border-gray-700 rounded-3xl overflow-hidden hover:border-lime-400 transition-all duration-300 cursor-pointer"
-    >
-      {/* Category */}
-      <div className="p-4 pb-0">
-        <span className="bg-gray-600 text-white text-xs px-3 py-1 rounded-full capitalize">
+    <article className="surface group flex min-w-0 flex-col overflow-hidden rounded-2xl hover:-translate-y-1 hover:border-lime-200/35">
+      <button
+        onClick={() => navigate(`/main/product/${product.id}`)}
+        className="relative grid h-52 place-items-center overflow-hidden bg-[#eff4ef] p-7 text-left sm:h-56"
+        aria-label={`View ${product.title}`}
+      >
+        <span className="absolute left-3 top-3 rounded-full bg-[#102618] px-2.5 py-1 text-[10px] font-bold capitalize tracking-wide text-lime-100">
           {product.category}
         </span>
-      </div>
+        <img src={product.image} alt="" className="h-full w-full object-contain mix-blend-multiply transition duration-300 group-hover:scale-105" />
+        <span className="absolute bottom-3 right-3 grid h-8 w-8 place-items-center rounded-full bg-white text-[#12331e] opacity-0 shadow-sm transition group-hover:opacity-100">
+          <ArrowUpRight size={16} />
+        </span>
+      </button>
 
-      {/* Image */}
-      <div className="bg-white h-72 flex items-center justify-center p-8">
-        <img
-          src={product.image}
-          alt={product.title}
-          className="h-52 object-contain hover:scale-105 transition"
-        />
-      </div>
-
-      {/* Details */}
-      <div className="p-5">
-        <p className="text-gray-400 text-sm capitalize">{product.category}</p>
-
-        <h2 className="font-semibold text-xl mt-2 line-clamp-2 h-14">
-          {product.title}
-        </h2>
-
-        {/* Rating */}
-        <div className="flex items-center gap-1 mt-3">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <Star
-              key={star}
-              size={16}
-              className={
-                star <= Math.round(product.rating.rate)
-                  ? "fill-yellow-400 text-yellow-400"
-                  : "text-gray-600"
-              }
-            />
-          ))}
-
-          <span className="text-gray-400 text-sm ml-2">
-            ({product.rating.count})
-          </span>
+      <div className="flex flex-1 flex-col p-4">
+        <button onClick={() => navigate(`/main/product/${product.id}`)} className="text-left">
+          <h3 className="min-h-11 text-sm font-bold leading-5 text-white transition group-hover:text-lime-100">{product.title}</h3>
+        </button>
+        <div className="mt-3 flex items-center gap-1.5 text-xs text-slate-400">
+          <Star size={14} className="fill-amber-300 text-amber-300" />
+          <span className="font-bold text-slate-200">{rating.toFixed(1)}</span>
+          <span>({reviewCount})</span>
         </div>
-
-        <hr className="my-4 border-gray-700" />
-
-        {/* Price */}
-        <div className="flex justify-between items-center">
-          <h3 className="text-3xl font-bold text-lime-400">${product.price}</h3>
-
+        <div className="mt-4 flex items-center justify-between gap-2 border-t border-white/8 pt-4">
+          <span className="text-xl font-extrabold tracking-tight text-white">${product.price.toFixed(2)}</span>
           <button
-            onClick={handleAddClick}
-            className="flex items-center gap-2 bg-lime-400 text-black px-5 py-2 rounded-full font-semibold hover:bg-lime-300"
+            onClick={() => addToCart(product)}
+            className="primary-button gap-1.5 px-3 py-2 text-xs"
+            aria-label={`Add ${product.title} to cart`}
           >
-            <ShoppingCart size={18} />
-            Add
+            <ShoppingBag size={15} /> Add
           </button>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 

@@ -1,14 +1,21 @@
 import React, { useContext } from "react";
 import { NavLink, useNavigate } from "react-router";
-import { ShoppingCart, LogOut, Zap } from "lucide-react";
+import { LogOut, Menu, ShoppingBag, X, Zap } from "lucide-react";
 import CartDrawer from "./CartDrawer";
 import { Main } from "../cosntext/MainContext.jsx";
 import { Auth } from "../cosntext/AuthContext.jsx";
 
+const navItems = [
+  { label: "Home", to: "/main", end: true },
+  { label: "Shop", to: "/main/shop" },
+  { label: "About", to: "/main/about" },
+];
+
 const Navbar = () => {
   const navigate = useNavigate();
-  const { showCart, setShowCart, cartItems } = useContext(Main);
+  const { showCart, setShowCart, totalItems } = useContext(Main);
   const { loggedInUser, setLoggedInUser } = useContext(Auth);
+  const [menuOpen, setMenuOpen] = React.useState(false);
 
   const handleLogout = () => {
     setLoggedInUser(null);
@@ -16,96 +23,101 @@ const Navbar = () => {
     navigate("/");
   };
 
+  const linkClass = ({ isActive }) =>
+    `rounded-lg px-3 py-2 text-sm font-semibold ${
+      isActive
+        ? "bg-lime-300/10 text-lime-200"
+        : "text-slate-300 hover:bg-white/5 hover:text-white"
+    }`;
+
   return (
-    <nav className="bg-[#111111] text-white px-10 py-4 border-b border-zinc-800">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Logo */}
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-xl bg-lime-400 flex items-center justify-center">
-            <Zap className="text-black" size={22} fill="black" />
-          </div>
+    <header className="sticky top-0 z-40 border-b border-white/8 bg-[#07110d]/86 backdrop-blur-xl">
+      <div className="site-container flex h-[4.75rem] items-center justify-between gap-3">
+        <NavLink
+          to="/main"
+          className="flex items-center gap-2.5 rounded-xl focus-visible:outline-offset-4"
+          aria-label="SkyMart home"
+        >
+          <span className="grid h-10 w-10 place-items-center rounded-xl bg-lime-300 text-[#102618] shadow-[0_8px_20px_rgba(183,245,109,0.22)]">
+            <Zap size={20} fill="currentColor" />
+          </span>
+          <span className="text-xl font-extrabold tracking-tight text-white">
+            Sky<span className="text-lime-300">Mart</span>
+          </span>
+        </NavLink>
 
-          <h1 className="text-3xl font-bold">
-            <span className="text-white">Sky</span>
-            <span className="text-lime-400">Mart</span>
-          </h1>
-        </div>
+        <nav className="hidden items-center rounded-xl border border-white/8 bg-white/[0.025] p-1 sm:flex" aria-label="Primary navigation">
+          {navItems.map((item) => (
+            <NavLink key={item.to} to={item.to} end={item.end} className={linkClass}>
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
 
-        {/* Nav Links */}
-        <div className="flex items-center gap-12 text-lg">
-          <NavLink
-            to="/main"
-            className={({ isActive }) =>
-              isActive
-                ? "text-lime-400 font-semibold"
-                : "text-gray-400 hover:text-white transition"
-            }
-            to={"/main"}
-            end
-          >
-            Home
-          </NavLink>
-
-          <NavLink
-            to="/main/shop"
-            className={({ isActive }) =>
-              isActive
-                ? "text-lime-400 font-semibold"
-                : "text-gray-400 hover:text-white transition"
-            }
-          >
-            Shop
-          </NavLink>
-
-          <NavLink
-            to="/main/about"
-            className={({ isActive }) =>
-              isActive
-                ? "text-lime-400 font-semibold"
-                : "text-gray-400 hover:text-white transition"
-            }
-          >
-            About
-          </NavLink>
-        </div>
-
-        {/* Right Side */}
-        <div className="flex items-center gap-4">
-          {/* User */}
-          <div className="flex items-center gap-3 border border-zinc-700 rounded-xl px-4 py-2">
-            <div className="w-10 h-10 rounded-lg bg-lime-400 text-black font-bold flex items-center justify-center">
-              {loggedInUser?.name?.[0]?.toUpperCase() || "U"}
-            </div>
-
-            <span className="text-gray-300">
-              {loggedInUser?.name || "User"}
-            </span>
-          </div>
-
-          {/* Cart */}
+        <div className="flex items-center gap-2">
           <button
             onClick={() => setShowCart(true)}
-            className="relative w-12 h-12 border border-zinc-700 rounded-xl flex items-center justify-center hover:bg-zinc-800 transition"
+            className="icon-button relative"
+            aria-label={`Open cart, ${totalItems} item${totalItems === 1 ? "" : "s"}`}
           >
-            <ShoppingCart size={22} />
-            {cartItems.length > 0 ? (
-              <span className="absolute -top-2 -right-2 inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-lime-500 px-1.5 text-xs font-semibold text-black">
-                {cartItems.length}
+            <ShoppingBag size={19} />
+            {totalItems > 0 ? (
+              <span className="absolute -right-1.5 -top-1.5 grid min-w-5 place-items-center rounded-full bg-lime-300 px-1.5 py-0.5 text-[10px] font-extrabold leading-none text-[#102618]">
+                {totalItems > 99 ? "99+" : totalItems}
               </span>
             ) : null}
           </button>
 
-          {/* Logout */}
+          <div className="hidden items-center gap-2.5 rounded-xl border border-white/8 bg-white/[0.025] py-1.5 pl-2 pr-3 md:flex">
+            <span className="grid h-7 w-7 place-items-center rounded-lg bg-gradient-to-br from-lime-200 to-emerald-400 text-xs font-extrabold text-[#102618]">
+              {loggedInUser?.name?.[0]?.toUpperCase() || "U"}
+            </span>
+            <span className="max-w-24 truncate text-sm font-medium text-slate-200">
+              {loggedInUser?.name || "Guest"}
+            </span>
+          </div>
+
+          <button onClick={handleLogout} className="icon-button hidden sm:inline-flex" aria-label="Sign out">
+            <LogOut size={18} />
+          </button>
+
           <button
-            onClick={handleLogout}
-            className="w-12 h-12 border border-zinc-700 rounded-xl flex items-center justify-center hover:bg-zinc-800 transition"
+            onClick={() => setMenuOpen((open) => !open)}
+            className="icon-button sm:hidden"
+            aria-label="Toggle navigation menu"
+            aria-expanded={menuOpen}
           >
-            <LogOut size={20} />
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
+
+      {menuOpen ? (
+        <div className="border-t border-white/8 bg-[#0b1811] px-4 py-3 sm:hidden">
+          <nav className="site-container grid gap-1" aria-label="Mobile navigation">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.end}
+                onClick={() => setMenuOpen(false)}
+                className={linkClass}
+              >
+                {item.label}
+              </NavLink>
+            ))}
+            <button
+              onClick={handleLogout}
+              className="mt-1 flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-semibold text-slate-300 hover:bg-white/5"
+            >
+              <LogOut size={16} /> Sign out
+            </button>
+          </nav>
+        </div>
+      ) : null}
+
       {showCart ? <CartDrawer /> : null}
-    </nav>
+    </header>
   );
 };
 

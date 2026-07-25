@@ -5,9 +5,11 @@ import Footer from "../component/Footer";
 
 const MainRoute = () => {
   return (
-    <div>
+    <div className="site-shell">
       <Navbar />
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
       <Footer />
     </div>
   );

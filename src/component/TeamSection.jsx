@@ -3,78 +3,16 @@ import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router";
 
 const teamMembers = [
-  {
-    name: "Aryan Shah",
-    role: "Founder & CEO",
-    initial: "A",
-    color: "bg-lime-400 text-black",
-  },
-  {
-    name: "Priya Mehta",
-    role: "Head of Product",
-    initial: "P",
-    color: "bg-blue-500 text-white",
-  },
-  {
-    name: "Rohan Verma",
-    role: "Lead Engineer",
-    initial: "R",
-    color: "bg-purple-500 text-white",
-  },
-  {
-    name: "Sneha Kapoor",
-    role: "Design Director",
-    initial: "S",
-    color: "bg-rose-500 text-white",
-  },
+  { name: "Aryan Shah", role: "Founder & CEO", initial: "A", color: "from-lime-200 to-emerald-400" },
+  { name: "Priya Mehta", role: "Head of Product", initial: "P", color: "from-sky-200 to-blue-400" },
+  { name: "Rohan Verma", role: "Lead Engineer", initial: "R", color: "from-violet-200 to-purple-400" },
+  { name: "Sneha Kapoor", role: "Design Director", initial: "S", color: "from-rose-200 to-pink-400" },
 ];
 
 const TeamSection = () => {
   const navigate = useNavigate();
   return (
-    <section className="bg-[#111111] text-white py-20 px-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Heading */}
-        <h2 className="text-5xl font-bold text-center mb-16">Meet the Team</h2>
-
-        {/* Team Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {teamMembers.map((member, index) => (
-            <div
-              key={index}
-              className="border border-zinc-600 rounded-3xl p-10 flex flex-col items-center hover:border-lime-400 transition-all duration-300 hover:-translate-y-2"
-            >
-              <div
-                className={`w-16 h-16 rounded-2xl flex items-center justify-center text-3xl font-bold ${member.color}`}
-              >
-                {member.initial}
-              </div>
-
-              <h3 className="text-2xl font-semibold mt-6">{member.name}</h3>
-
-              <p className="text-gray-500 mt-2">{member.role}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* CTA */}
-        <div className="mt-20 border border-lime-400/30 rounded-[40px] py-20 px-8 text-center">
-          <h2 className="text-5xl font-bold">Ready to shop?</h2>
-
-          <p className="text-gray-500 text-xl mt-6">
-            Explore thousands of products at unbeatable prices.
-          </p>
-
-          <button
-            onClick={() => navigate("/main/shop")}
-            className="mt-12 inline-flex items-center gap-3 bg-lime-400 text-black px-10 py-5 rounded-2xl text-2xl font-semibold hover:bg-lime-300 transition-all"
-          >
-            Browse Products
-            <ArrowRight size={26} />
-          </button>
-        </div>
-      </div>
-    </section>
+    <section className="pb-6 sm:pb-10"><div className="site-container"><div className="mb-6 text-center"><p className="eyebrow">The people behind it</p><h2 className="mt-3 text-3xl font-extrabold tracking-tight text-white">Small team, high standards.</h2></div><div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{teamMembers.map((member) => <article key={member.name} className="surface rounded-2xl p-5 text-center"><span className={`mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br ${member.color} text-xl font-extrabold text-[#102618]`}>{member.initial}</span><h3 className="mt-5 font-extrabold text-white">{member.name}</h3><p className="mt-1 text-sm text-slate-400">{member.role}</p></article>)}</div><div className="relative mt-12 overflow-hidden rounded-3xl border border-lime-200/16 bg-gradient-to-br from-[#153d26] to-[#0c2015] px-6 py-10 text-center sm:px-10"><div className="absolute inset-0 opacity-30" style={{ backgroundImage: "radial-gradient(rgba(183,245,109,.32) 1px, transparent 1px)", backgroundSize: "16px 16px" }} /><div className="relative"><p className="eyebrow">Ready when you are</p><h2 className="mt-3 text-3xl font-extrabold tracking-tight text-white">Make your next find a good one.</h2><p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-emerald-50/70">Explore the collection, compare with confidence, and get the things that make every day work a little better.</p><button onClick={() => navigate("/main/shop")} className="primary-button mt-6 gap-2 px-5 py-3 text-sm">Explore the shop <ArrowRight size={17} /></button></div></div></div></section>
   );
 };
 
