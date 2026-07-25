@@ -30,7 +30,7 @@ const CartDrawer = () => {
     >
       <aside
         onClick={(e) => e.stopPropagation()}
-        className="w-30  max-w-[500px] h-screen bg-[#111111] border-l border-white/10 flex flex-col text-white"
+        className="w-[400px]   h-screen bg-[#111111] border-l border-white/10 flex flex-col text-white"
       >
         {/* Header */}
         <header className="h-24 border-b border-white/10 px-8 flex items-center justify-between">
