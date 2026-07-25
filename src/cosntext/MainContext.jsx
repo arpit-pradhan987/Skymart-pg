@@ -1,12 +1,29 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 // The context is intentionally exported alongside its provider for concise imports.
 // eslint-disable-next-line react-refresh/only-export-components
 export const Main = createContext();
 
+const CART_STORAGE_KEY = "skyMartCart";
+
+const getSavedCart = () => {
+  try {
+    const savedCart = localStorage.getItem(CART_STORAGE_KEY);
+    const parsedCart = savedCart ? JSON.parse(savedCart) : [];
+
+    return Array.isArray(parsedCart) ? parsedCart : [];
+  } catch {
+    return [];
+  }
+};
+
 export const MainProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(getSavedCart);
   const [showCart, setShowCart] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
+  }, [cartItems]);
 
   const addToCart = (product) => {
     setCartItems((prevItems) => {
