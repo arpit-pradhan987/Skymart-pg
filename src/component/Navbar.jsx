@@ -46,9 +46,17 @@ const Navbar = () => {
           </span>
         </NavLink>
 
-        <nav className="hidden items-center rounded-xl border border-white/8 bg-white/[0.025] p-1 sm:flex" aria-label="Primary navigation">
+        <nav
+          className="hidden items-center rounded-xl border border-white/8 bg-white/[0.025] p-1 sm:flex"
+          aria-label="Primary navigation"
+        >
           {navItems.map((item) => (
-            <NavLink key={item.to} to={item.to} end={item.end} className={linkClass}>
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.end}
+              className={linkClass}
+            >
               {item.label}
             </NavLink>
           ))}
@@ -77,18 +85,22 @@ const Navbar = () => {
             </span>
           </div>
 
-          <button onClick={handleLogout} className="icon-button hidden sm:inline-flex" aria-label="Sign out">
+          <button
+            onClick={handleLogout}
+            className="icon-button hidden sm:inline-flex"
+            aria-label="Sign out"
+          >
             <LogOut size={18} />
           </button>
 
-          <button
+          {/* <button
             onClick={() => setMenuOpen((open) => !open)}
             className="icon-button sm:hidden"
             aria-label="Toggle navigation menu"
             aria-expanded={menuOpen}
           >
             {menuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          </button> */}
         </div>
       </div>
 
